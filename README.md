@@ -1,61 +1,94 @@
 <div align="center">
+  <img src="https://github.com/sadraabb/zyntra-streamlit/raw/main/Screenshot%202025-12-08%20164328.png" width="80%" />
+</div>
 
-# 🎮 ZYNTRA
-### پلتفرم وب بازی‌ها و سرگرمی‌های تعاملی
 
-> جایی که کدنویسی به تجربه تبدیل می‌شود  
-> پروژه‌ای مبتنی بر Python و Streamlit
+<div dir="rtl" align="right">
 
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-![Streamlit](https://img.shields.io/badge/Streamlit-Framework-red)
+# 🎮 به دنیای **Zyntra** خوش آمدید!
+### جایی که کدهای پایتون به هیجان تبدیل می‌شوند
+
+**Zyntra** یک پلتفرم تعاملی مبتنی بر وب است که با استفاده از **Python** و **Streamlit** طراحی شده و هدف آن ایجاد بستری مدرن برای اجرای مینی‌گیم‌ها و تجربه‌های سرگرم‌کننده تحت وب می‌باشد.
+
+این پروژه صرفاً یک تمرین ساده نیست؛ بلکه یک **زیرساخت توسعه‌پذیر** برای بازی‌ها و سیستم‌های تعاملی آینده است.
+
+---
+
+## ✨ ویژگی‌های کلیدی (Features)
+
+- 🔐 **احراز هویت هوشمند**  
+  جلوگیری از ورود کاربران تا تکمیل صحیح فرآیند ثبت‌نام
+
+- 🧠 **مدیریت پیشرفته Session**  
+  استفاده حرفه‌ای از `st.session_state` برای حفظ وضعیت کاربر
+
+- 🎨 **رابط کاربری مدرن و مینیمال**  
+  طراحی ساده، خوانا و کاربرپسند با المان‌های Streamlit
+
+- 🆔 **شناسه کاربری یکتا**  
+  تولید آیدی تصادفی و منحصربه‌فرد برای هر کاربر در زمان ثبت‌نام
+
+---
+
+## 🛠 تکنولوژی‌های استفاده‌شده (Tech Stack)
+
+<div align="center">
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![UI/UX](https://img.shields.io/badge/UI%2FUX-Custom-green?style=for-the-badge)
 
 </div>
 
 ---
 
-## 🪪 شناسنامه پروژه
+## 🚀 نقشه راه توسعه (Roadmap)
 
-| مشخصات | مقدار |
-|------|------|
-| نام پروژه | Zyntra |
-| نوع پروژه | Web-based Interactive Platform |
-| زبان | Python |
-| فریم‌ورک | Streamlit |
-| وضعیت | در حال توسعه |
-| ذخیره‌سازی | Session (موقت) |
-| هدف | ایجاد زیرساخت بازی‌ها و سرگرمی‌های تعاملی |
+برنامه‌های آینده پروژه Zyntra شامل موارد زیر است:
+
+1. 🎯 اضافه شدن مینی‌گیم‌های متنوع (نوستالژیک و مدرن)
+2. 👤 پیاده‌سازی پروفایل کاربری و ذخیره رکوردها
+3. 🏆 سیستم لیدربورد و رقابت کاربران
+4. 🌐 اتصال به APIهای خارجی برای گسترش امکانات
+5. 💾 افزودن ذخیره‌سازی دائمی (Database)
 
 ---
 
-## 🧠 معرفی پروژه
+## ⚙️ نصب و اجرای پروژه
 
-**Zyntra** یک پروژه وب‌محور سرگرمی است که با تمرکز بر تعامل کاربر، مدیریت Session و توسعه‌پذیری طراحی شده است.
+### پیش‌نیازها
+- Python نسخه 3.9 یا بالاتر
+- نصب Streamlit
 
-این پروژه صرفاً یک دمو ساده نیست؛  
-بلکه **پایه‌ای برای یک سیستم سرگرمی بزرگ‌تر** شامل بازی‌ها، امتیازدهی، پروفایل کاربران و تعاملات آینده است.
+### مراحل اجرا
+
+#### 1️⃣ کلون کردن مخزن
+```bash
+git clone https://github.com/your-username/zyntra.git
+```
+2️⃣ ورود به پوشه پروژه
+```bash
+cd zyntra
+```
+3️⃣ نصب وابستگی‌ها (در صورت وجود)
+```bash
+pip install -r requirements.txt
+```
+4️⃣ اجرای برنامه
+
+```bash
+streamlit run main.py
+```
+
+## 👨‍💻 توسعه‌دهنده
+
+**صدرا (Sadra)**  
+Python & Streamlit Developer  
 
 ---
+<div align="center">
 
-## ✨ امکانات فعلی
+<img src="https://img.shields.io/badge/Built%20with-Love-red?style=for-the-badge&logo=heart" height="28" />
+<img src="https://img.shields.io/badge/Made%20with-Python-3776AB?style=for-the-badge&logo=python&logoColor=white" height="28" />
 
-### 🔐 سیستم ثبت‌نام
-- نام کاربری
-- نام و نام خانوادگی
-- پذیرش قوانین
-- اعتبارسنجی فیلدهای اجباری
-- جلوگیری از ثبت‌نام مجدد
-
-### 🧭 مدیریت وضعیت کاربر
-- استفاده از `st.session_state`
-- کنترل دسترسی بین صفحات
-- ذخیره موقت اطلاعات
-- رفرش خودکار پس از ثبت‌نام موفق
-
-### 🏠 صفحه Home
-- بررسی وضعیت ثبت‌نام
-- خوش‌آمدگویی داینامیک
-- نمایش مسیر توسعه پروژه
-- محدودسازی دسترسی کاربران غیرمجاز
-
----
-A modular Streamlit-based web app with user registration and interactive features. Currently under active development. 🚧
+</div>
