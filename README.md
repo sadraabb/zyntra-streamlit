@@ -6,8 +6,8 @@
 > جایی که کدنویسی به تجربه تبدیل می‌شود  
 > پروژه‌ای مبتنی بر Python و Streamlit
 
-![Python](https://www.python.org/downloads/)
-![Streamlit](https://streamlit.io/)
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Framework-red)
 
 </div>
 
