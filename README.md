@@ -64,7 +64,7 @@
 
 #### 1️⃣ کلون کردن مخزن
 ```bash
-git clone https://github.com/your-username/zyntra.git
+git clone https://github.com/sadraabb/zyntra-streamlit.git
 ```
 2️⃣ ورود به پوشه پروژه
 ```bash
