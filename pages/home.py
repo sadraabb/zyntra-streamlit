@@ -35,7 +35,7 @@ else:
 
 
 if __name__ == "__main__":
-    # Apply custom styles
-    apply_styles()
     # Configure page titles and layout
     config_page_titles()
+    # Apply custom styles
+    apply_styles()
