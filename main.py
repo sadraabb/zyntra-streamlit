@@ -46,6 +46,8 @@ import time
 
 # --- CONFIGURATION & STYLING ---
 def configure_page():
+    # #Program Title
+    st.title("برنامه بازی های سرگرمی تحت وب",width="content")
     st.set_page_config(
         page_title="Zyntra | Registration",
         page_icon="🎮",
@@ -117,10 +119,7 @@ def apply_custom_design():
 
 
 
-# streamlit_page_title : صفحه ثبت نام
 
-#Program Title
-st.title("برنامه بازی های سرگرمی تحت وب",width="content")
 
 def init_session_state():
     default_data = {
