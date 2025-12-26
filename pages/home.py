@@ -8,12 +8,12 @@ def config_page_titles():
         page_icon="🕹️",
         layout="centered"
     )
-    st.title("بازی‌ها و سرگرمی‌های تعاملی Zyntra")
 # بررسی وضعیت ثبت نام
 if "registered" not in st.session_state or not st.session_state["registered"]:
     st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
     st.stop()
 else:
+    st.title("بازی‌ها و سرگرمی‌های تعاملی Zyntra")
     st.markdown(
         """
         سلام **{name}**!  
