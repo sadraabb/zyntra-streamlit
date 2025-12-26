@@ -45,11 +45,36 @@ import random as rd
 import time
 
 # --- CONFIGURATION & STYLING ---
-st.set_page_config(
-    page_title="Zyntra | Registration",
-    page_icon="🎮",
-    layout="centered"
-)
+def configure_page():
+    st.set_page_config(
+        page_title="Zyntra | Registration",
+        page_icon="🎮",
+          layout="centered"
+    )
+    # راست‌چین کردن صفحه 
+    st.markdown(
+        """
+        <style>
+        /* راست‌چین کردن همه المان‌های Streamlit */
+        .stApp {
+        direction: rtl;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+    st.markdown(
+        """
+        <style>
+        input {
+        direction: rtl;
+        text-align: right;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+    
 
 def apply_custom_design():
     st.markdown(
@@ -90,31 +115,8 @@ def apply_custom_design():
         unsafe_allow_html=True
     )
 
-apply_custom_design()
 
-st.markdown(
-    """
-    <style>
-        /* راست‌چین کردن همه المان‌های Streamlit */
-        .stApp {
-            direction: rtl;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
-st.markdown(
-    """
-    <style>
-        input {
-            direction: rtl;
-            text-align: right;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 # streamlit_page_title : صفحه ثبت نام
 
 #Program Title
@@ -194,6 +196,8 @@ def process_register(user_id,user_name,name,last_name,sumbit_button,check_rules)
             st.rerun()
 
 if __name__ == "__main__":
+    configure_page()
+    apply_custom_design()
     if "registered" not in st.session_state:
         init_session_state()
     # اجرای تابع فرم ثبت نام و دریافت مقادیر ورودی کاربر
