@@ -1,78 +1,6 @@
 #-- IMPORTS ---
 import streamlit as st
-
-# --- CONFIGURATION & STYLING ---
-def configure_page():
-    st.set_page_config(
-        page_title="Zyntra | home",
-        page_icon="🎮",
-          layout="centered"
-    )
-    # راست‌چین کردن صفحه 
-    st.markdown(
-        """
-        <style>
-        /* راست‌چین کردن همه المان‌های Streamlit */
-        .stApp {
-        direction: rtl;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-        )
-    st.markdown(
-        """
-        <style>
-        input {
-        direction: rtl;
-        text-align: right;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-        )
-
-
-def apply_custom_design():
-    st.markdown(
-        """
-        <style>
-        /* تنظیم تصویر پس‌زمینه */
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url("https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80");
-            background-size: cover;
-        }
-
-        /* استایل دادن به فرم (حالت شیشه‌ای) */
-        div[data-testid="stForm"] {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        /* تغییر رنگ تایتل و متون */
-        h1 {
-            color: #00f2fe;
-            text-shadow: 2px 2px 4px #000000;
-            text-align: center;
-        }
-        
-        /* استایل دکمه ثبت نام */
-        button[kind="primaryFormSubmit"] {
-            background-color: #00f2fe !important;
-            color: black !important;
-            font-weight: bold !important;
-            width: 100%;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-apply_custom_design()
+from styles.styles import apply_styles
 # بررسی وضعیت ثبت نام
 if "registered" not in st.session_state or not st.session_state["registered"]:
     st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
@@ -101,5 +29,5 @@ else:
 
 
 if __name__ == "__main__":
-    configure_page()
-    apply_custom_design()
+    # Apply custom styles
+    apply_styles()
