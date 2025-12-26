@@ -1,13 +1,19 @@
 #-- IMPORTS ---
 import streamlit as st
 from styles.styles import apply_styles
+
+def config_page_titles():
+    st.set_page_config(
+        page_title="Zyntra | Interactive Games",
+        page_icon="🕹️",
+        layout="centered"
+    )
+    st.title("بازی‌ها و سرگرمی‌های تعاملی Zyntra")
 # بررسی وضعیت ثبت نام
 if "registered" not in st.session_state or not st.session_state["registered"]:
     st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
     st.stop()
 else:
-    st.title("🎮 خوش آمدید به Zyntra – مرکز بازی‌ها", width="content")
-    
     st.markdown(
         """
         سلام **{name}**!  
@@ -31,3 +37,5 @@ else:
 if __name__ == "__main__":
     # Apply custom styles
     apply_styles()
+    # Configure page titles and layout
+    config_page_titles()
