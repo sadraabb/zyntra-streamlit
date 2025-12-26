@@ -1,10 +1,37 @@
+#-- IMPORTS ---
 import streamlit as st
+
 # --- CONFIGURATION & STYLING ---
-st.set_page_config(
-    page_title="Zyntra | Registration",
-    page_icon="🎮",
-    layout="centered"
-)
+def configure_page():
+    st.set_page_config(
+        page_title="Zyntra | home",
+        page_icon="🎮",
+          layout="centered"
+    )
+    # راست‌چین کردن صفحه 
+    st.markdown(
+        """
+        <style>
+        /* راست‌چین کردن همه المان‌های Streamlit */
+        .stApp {
+        direction: rtl;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+    st.markdown(
+        """
+        <style>
+        input {
+        direction: rtl;
+        text-align: right;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+
 
 def apply_custom_design():
     st.markdown(
@@ -70,3 +97,9 @@ else:
     
     # دکمه ورود به بخش بازی‌ها (فعلاً غیر فعال)
     st.button("ورود به بازی‌ها (Coming Soon)", disabled=True)
+
+
+
+if __name__ == "__main__":
+    configure_page()
+    apply_custom_design()
