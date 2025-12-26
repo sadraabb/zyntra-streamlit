@@ -68,7 +68,7 @@ git clone https://github.com/sadraabb/zyntra-streamlit.git
 ```
 2️⃣ ورود به پوشه پروژه
 ```bash
-cd zyntra
+cd zyntra-streamlit
 ```
 3️⃣ نصب وابستگی‌ها (در صورت وجود)
 ```bash
