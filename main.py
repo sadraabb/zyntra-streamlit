@@ -150,7 +150,7 @@ def create_form():
         st.balloons()
         st.write(f"خوش آمدی {st.session_state['name']} عزیز! ✨")
         if st.button("ورود به دنیای زینترو 🚀"):
-            st.switch_page(page="pages/home.py")
+            st.switch_page(page="pages/1_home.py")
         return default_return
     else:
         with st.form("register_form"):
