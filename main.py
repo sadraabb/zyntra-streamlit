@@ -196,10 +196,10 @@ def process_register(user_id,user_name,name,last_name,sumbit_button,check_rules)
         elif check_rules is not True:
             st.error("برای ادامه باید قوانین رو بپذیرید")
         elif all ([user_name,name,last_name]):
-            st.toast("ثبت‌نام شما با موفقیت انجام شد! در حال انتقال...",icon="🎮")
-            session_state_mange_success_register(user_id, user_name, name, last_name, check_rules)
-            time.sleep(2)
-            st.rerun()
+            with st.spinner("در حال ثبت‌نام... 🎮"):
+                session_state_mange_success_register(user_id, user_name, name, last_name, check_rules)
+                time.sleep(2)
+                st.rerun()
 
 def run_page():
     user_id, user_name, name, last_name, sumbit_button, check_rules = create_form()

@@ -14,3 +14,10 @@ def home_page_config():
         page_icon="🕹️",
         layout="centered"
     )
+
+def feedback_page_config():
+    st.set_page_config(
+        page_title="Zyntra | Feedback",
+        page_icon="💬",
+        layout="centered"
+    )
