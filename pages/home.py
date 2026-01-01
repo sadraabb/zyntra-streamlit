@@ -1,13 +1,14 @@
 #-- IMPORTS ---
 import streamlit as st
 from styles.styles import apply_styles
+from config.page_config import home_page_config
 
-def config_page_titles():
-    st.set_page_config(
-        page_title="Zyntra | Interactive Games",
-        page_icon="🕹️",
-        layout="centered"
-    )
+#--- PAGE CONTENT ---
+def bootstrap_home_page():
+    home_page_config()
+    apply_styles()
+
+bootstrap_home_page()
 # بررسی وضعیت ثبت نام
 if "registered" not in st.session_state or not st.session_state["registered"]:
     st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
@@ -34,8 +35,10 @@ else:
 
 
 
-if __name__ == "__main__":
-    # Configure page titles and layout
-    config_page_titles()
-    # Apply custom styles
-    apply_styles()
+# if __name__ == "__main__":
+#     # Apply custom styles
+#     apply_styles()
+#     # Configure page titles and layout
+#     config_page_titles()
+#     # Apply custom styles
+#     #apply_styles()

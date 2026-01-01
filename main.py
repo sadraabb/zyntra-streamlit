@@ -43,84 +43,16 @@ __meta__ = {
 import streamlit as st
 import random as rd
 import time
-
+from styles.styles import apply_styles
+from config.page_config import main_page_config
+# --- PAGE TITLE ---
+st.title("برنامه بازی های سرگرمی تحت وب",width="content")
 # --- CONFIGURATION & STYLING ---
-def configure_page():
-    # #Program Title
-    st.title("برنامه بازی های سرگرمی تحت وب",width="content")
-    st.set_page_config(
-        page_title="Zyntra | Registration",
-        page_icon="🎮",
-          layout="centered"
-    )
-    # راست‌چین کردن صفحه 
-    st.markdown(
-        """
-        <style>
-        /* راست‌چین کردن همه المان‌های Streamlit */
-        .stApp {
-        direction: rtl;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-        )
-    st.markdown(
-        """
-        <style>
-        input {
-        direction: rtl;
-        text-align: right;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-        )
-    
-
-def apply_custom_design():
-    st.markdown(
-        """
-        <style>
-        /* تنظیم تصویر پس‌زمینه */
-        .stApp {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url("https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80");
-            background-size: cover;
-        }
-
-        /* استایل دادن به فرم (حالت شیشه‌ای) */
-        div[data-testid="stForm"] {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        /* تغییر رنگ تایتل و متون */
-        h1 {
-            color: #00f2fe;
-            text-shadow: 2px 2px 4px #000000;
-            text-align: center;
-        }
-        
-        /* استایل دکمه ثبت نام */
-        button[kind="primaryFormSubmit"] {
-            background-color: #00f2fe !important;
-            color: black !important;
-            font-weight: bold !important;
-            width: 100%;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-
-
-
-
+def bootstrap_main_page():
+    main_page_config()
+    apply_styles()
+bootstrap_main_page()
+# --- SESSION STATE MANAGEMENT ---
 def init_session_state():
     default_data = {
         "registered" : False,
@@ -133,8 +65,83 @@ def init_session_state():
     for key,value in default_data.items():
         if key not in st.session_state:
             st.session_state[key] = value
+# --- SESSION STATE INITIALIZATION ---
+def init_page_state():
+    if "registered" not in st.session_state:
+        init_session_state()
+# def configure_page():
+#     # #Program Title
+#     st.title("برنامه بازی های سرگرمی تحت وب",width="content")
+#     st.set_page_config(
+#         page_title="Zyntra | Registration",
+#         page_icon="🎮",
+#           layout="centered"
+#     )
+#     # راست‌چین کردن صفحه 
+#     st.markdown(
+#         """
+#         <style>
+#         /* راست‌چین کردن همه المان‌های Streamlit */
+#         .stApp {
+#         direction: rtl;
+#         }
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#         )
+#     st.markdown(
+#         """
+#         <style>
+#         input {
+#         direction: rtl;
+#         text-align: right;
+#         }
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#         )
+    
 
+# def apply_custom_design():
+#     st.markdown(
+#         """
+#         <style>
+#         /* تنظیم تصویر پس‌زمینه */
+#         .stApp {
+#             background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+#                         url("https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80");
+#             background-size: cover;
+#         }
 
+#         /* استایل دادن به فرم (حالت شیشه‌ای) */
+#         div[data-testid="stForm"] {
+#             background-color: rgba(255, 255, 255, 0.05);
+#             border-radius: 15px;
+#             padding: 20px;
+#             border: 1px solid rgba(255, 255, 255, 0.1);
+#             backdrop-filter: blur(10px);
+#         }
+
+#         /* تغییر رنگ تایتل و متون */
+#         h1 {
+#             color: #00f2fe;
+#             text-shadow: 2px 2px 4px #000000;
+#             text-align: center;
+#         }
+        
+#         /* استایل دکمه ثبت نام */
+#         button[kind="primaryFormSubmit"] {
+#             background-color: #00f2fe !important;
+#             color: black !important;
+#             font-weight: bold !important;
+#             width: 100%;
+#         }
+#         </style>
+#         """,
+#         unsafe_allow_html=True
+#     )
+
+# --- REGISTER FORM CREATION ---
 # Create Register Form
 def create_form():
     default_return = (None, None, None, None, None, None)
@@ -194,11 +201,20 @@ def process_register(user_id,user_name,name,last_name,sumbit_button,check_rules)
             time.sleep(2)
             st.rerun()
 
-if __name__ == "__main__":
-    configure_page()
-    apply_custom_design()
-    if "registered" not in st.session_state:
-        init_session_state()
-    # اجرای تابع فرم ثبت نام و دریافت مقادیر ورودی کاربر
-    user_id, user_name, name, last_name, sumbit_button ,check_rules = create_form()
-    process_register(user_id,user_name,name,last_name,sumbit_button,check_rules)
+def run_page():
+    user_id, user_name, name, last_name, sumbit_button, check_rules = create_form()
+    process_register(
+        user_id,
+        user_name,
+        name,
+        last_name,
+        sumbit_button,
+        check_rules
+    )
+
+
+# ============ EXECUTION ============
+bootstrap_main_page()
+init_page_state()
+run_page()
+# ==================================
