@@ -21,3 +21,11 @@ def feedback_page_config():
         page_icon="💬",
         layout="centered"
     )
+
+def guesslab_page_config():
+    st.set_page_config(
+        page_title="Zyntra | GuessLab Game",
+        page_icon="🧩",
+        layout="centered"
+    )
+# --- END OF PAGE CONFIGURATION ---
