@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/sadraabb/zyntra-streamlit/blob/main/ScreenShots/Zyntra.png" width="80%" />
+  <img src="https://github.com/sadraabb/zyntra-streamlit/blob/main/assets/ScreenShots/Zyntra.png" width="80%" />
 </div>
 
 
