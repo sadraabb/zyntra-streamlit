@@ -8,7 +8,7 @@ def bootstrap_home_page():
     home_page_config()
     apply_styles()
 
-bootstrap_home_page()
+
 # بررسی وضعیت ثبت نام
 if "registered" not in st.session_state or not st.session_state["registered"]:
     st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
@@ -35,10 +35,6 @@ else:
 
 
 
-# if __name__ == "__main__":
-#     # Apply custom styles
-#     apply_styles()
-#     # Configure page titles and layout
-#     config_page_titles()
-#     # Apply custom styles
-#     #apply_styles()
+# ============ EXECUTION ============
+bootstrap_home_page()
+# ==================================
