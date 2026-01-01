@@ -4,8 +4,8 @@ import streamlit as st
 def apply_styles():
     style_code = """
     <style>
-        /* کل اپلیکیشن */
-        body, .stApp {
+        /* کل اپلیکیشن و body */
+        body, .stApp, div, span, p, h1, h2, h3, h4, h5, h6 {
             direction: rtl;
             text-align: right;
             font-family: 'Vazir', sans-serif;  /* فونت فارسی استاندارد */
@@ -33,9 +33,8 @@ def apply_styles():
             backdrop-filter: blur(10px);
         }
 
-        /* تایتل‌ها */
-        h1, h2, h3, p {
-            text-align: center;  /* تایتل‌ها و متن‌ها */
+        /* رنگ هدرها */
+        h1, h2, h3, h4, h5, h6 {
             color: #00f2fe;
             text-shadow: 2px 2px 4px #000000;
         }
