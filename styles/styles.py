@@ -1,8 +1,11 @@
 # styles.py
 import streamlit as st
 
-def apply_styles():
+#Logo function
+def show_logo(size = "large"):
     st.logo("assets/logo/Zyntra-logo.png",size="large")
+
+def apply_styles():
     style_code = """
     <style>
         /* کل اپلیکیشن و body */

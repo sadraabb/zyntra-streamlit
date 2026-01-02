@@ -1,10 +1,11 @@
 import streamlit as st
-from styles.styles import apply_styles
+from styles.styles import apply_styles,show_logo
 from config.page_config import feedback_page_config
 # --- PAGE CONTENT ---
 def bootstrap_feedback_page():
     feedback_page_config()
     apply_styles()
+    show_logo()
 # --- FEEDBACK PAGE CONTENT ---
 def display_feedback_page():
     st.title("بازخورد و پیشنهادات شما")

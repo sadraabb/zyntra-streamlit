@@ -1,12 +1,13 @@
 #-- IMPORTS ---
 import streamlit as st
-from styles.styles import apply_styles
+from styles.styles import apply_styles,show_logo
 from config.page_config import home_page_config
 
 #--- PAGE CONTENT ---
 def bootstrap_home_page():
     home_page_config()
     apply_styles()
+    show_logo()
 
 
 # بررسی وضعیت ثبت نام

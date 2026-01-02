@@ -43,7 +43,7 @@ __meta__ = {
 import streamlit as st
 import random as rd
 import time
-from styles.styles import apply_styles
+from styles.styles import apply_styles,show_logo
 from config.page_config import main_page_config
 # --- PAGE TITLE ---
 st.title("برنامه بازی های سرگرمی تحت وب",width="content")
@@ -51,6 +51,7 @@ st.title("برنامه بازی های سرگرمی تحت وب",width="content"
 def bootstrap_main_page():
     main_page_config()
     apply_styles()
+    show_logo()
 bootstrap_main_page()
 # --- SESSION STATE MANAGEMENT ---
 def init_session_state():
