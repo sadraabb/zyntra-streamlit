@@ -83,8 +83,10 @@ pip install -r requirements.txt
 4️⃣ اجرای برنامه
 
 ```bash
+# روش اول
 streamlit run main.py
-یا با دستور
+
+# روش دوم
 python -m streamlit run main.py
 ```
 
