@@ -45,6 +45,7 @@ import random as rd
 import time
 from styles.styles import apply_styles,show_logo
 from config.page_config import main_page_config
+from st_pages import add_page_title, get_nav_from_toml
 # --- PAGE TITLE ---
 st.title("برنامه بازی های سرگرمی تحت وب",width="content")
 # --- CONFIGURATION & STYLING ---
@@ -52,7 +53,6 @@ def bootstrap_main_page():
     main_page_config()
     apply_styles()
     show_logo()
-bootstrap_main_page()
 # --- SESSION STATE MANAGEMENT ---
 def init_session_state():
     default_data = {
@@ -201,7 +201,7 @@ def process_register(user_id,user_name,name,last_name,sumbit_button,check_rules)
                 session_state_mange_success_register(user_id, user_name, name, last_name, check_rules)
                 time.sleep(2)
                 st.rerun()
-
+# --- MAIN PAGE RUNNER ---
 def run_page():
     user_id, user_name, name, last_name, sumbit_button, check_rules = create_form()
     process_register(

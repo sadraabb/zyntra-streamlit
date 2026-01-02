@@ -4,7 +4,7 @@ import streamlit as st
 #Logo function
 def show_logo(size = "large"):
     st.logo("assets/logo/Zyntra-logo.png",size="large")
-
+# Apply custom styles
 def apply_styles():
     style_code = """
     <style>
