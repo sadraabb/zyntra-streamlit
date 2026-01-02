@@ -84,6 +84,8 @@ pip install -r requirements.txt
 
 ```bash
 streamlit run main.py
+یا با دستور
+python -m streamlit run main.py
 ```
 
 ## 👨‍💻 توسعه‌دهنده
