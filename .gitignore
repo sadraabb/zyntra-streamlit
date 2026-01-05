@@ -210,5 +210,5 @@ __marimo__/
 # streamlit - secertsfile
 .streamlit/secrets.toml
 
-#admin-panel
-.adminpanel/
+#adminpanel
+.adminpanel
