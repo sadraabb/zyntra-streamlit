@@ -53,3 +53,18 @@ def apply_styles():
     </style>
     """
     st.markdown(style_code, unsafe_allow_html=True)
+
+def apply_panel_admin_styles():
+    style_code = """
+    <style>
+        /* استایل مخصوص پنل ادمین */
+        .stApp {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #00f2fe;
+        }
+    </style>
+    """
+    st.markdown(style_code, unsafe_allow_html=True)

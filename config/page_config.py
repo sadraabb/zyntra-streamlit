@@ -28,4 +28,11 @@ def guesslab_page_config():
         page_icon="🧩",
         layout="centered"
     )
+
+def admin_panel_config():
+    st.set_page_config(
+        page_title="Zyntra | Admin Panel",
+        page_icon="🔧",
+        layout="centered"
+    )
 # --- END OF PAGE CONFIGURATION ---

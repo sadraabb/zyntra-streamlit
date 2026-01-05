@@ -1,4 +1,5 @@
 import streamlit as st
+import sqlite3
 from styles.styles import apply_styles,show_logo
 from config.page_config import feedback_page_config
 # --- PAGE CONTENT ---
