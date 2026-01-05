@@ -63,7 +63,7 @@ def apply_panel_admin_styles():
             color: #ffffff;
         }
         h1, h2, h3, h4, h5, h6 {
-            color: #00f2fe;
+            color: #blue;
         }
     </style>
     """
