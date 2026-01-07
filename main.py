@@ -42,10 +42,10 @@ __meta__ = {
 #imports
 import streamlit as st
 import random as rd
+import sqlite3
 import time
-from styles.styles import apply_styles,show_logo
-from config.page_config import main_page_config
-from st_pages import add_page_title, get_nav_from_toml
+from styles import apply_styles,show_logo
+from config import main_page_config
 # --- PAGE TITLE ---
 st.title("برنامه بازی های سرگرمی تحت وب",width="content")
 # --- CONFIGURATION & STYLING ---
@@ -144,40 +144,63 @@ def init_page_state():
 #     )
 
 # --- REGISTER FORM CREATION ---
+# login form
+def login_form():
+    with st.form("login_form"):
+        pass
 # Create Register Form
-def create_form():
-    default_return = (None, None, None, None, None, None)
-    if st.session_state["registered"]:
+def create_register_form():
+    if st.session_state.get("registered") == True:
         # یک اطلاع رسانی کوتاه متنی بابت اتمام مراحل ثبت نام و عدم نیاز به ثبت نام
         st.balloons()
         st.write(f"خوش آمدی {st.session_state['name']} عزیز! ✨")
         if st.button("ورود به دنیای زینترو 🚀"):
             st.switch_page(page="pages/1_home.py")
-        return default_return
     else:
         with st.form("register_form"):
-            user_id = rd.randint(1000,52534)
-            warning_show = st.warning("این یک پروژه نمونه میباشد! اطلاعات شما ذخیره نمیشود!",icon="🚨")
-            id_number = st.number_input("آیدی عددی", value=user_id, disabled=True,key="reg_user_id")
-            user_name = st.text_input(label="نام کاربری *",placeholder="لطفا یک نام کاربری برای خود بنویسید برای مثال : sadraabb",key="reg_username")
+            if "reg_user_id" not in st.session_state or not st.session_state["reg_user_id"]:
+                st.session_state["reg_user_id"] = rd.randint(1000,9999)
+            user_id = st.session_state["reg_user_id"]
+            warning_show = st.warning(
+                """
+                **توجه:**
+                 
+                   این پروژه در حال حاضر در حالت آزمایشی (Demo) قرار دارد.  
+                     لطفاً از وارد کردن اطلاعات واقعی یا شخصی خودداری کرده و از داده‌های نمونه و ساختگی استفاده نمایید،  
+                       زیرا اطلاعات واردشده در پایگاه داده ذخیره می‌شوند.
+                """,
+                icon="🚨"
+                )
+
+            #id_number = st.number_input("آیدی عددی", value=user_id, disabled=True,key="reg_user_id")
             name = st.text_input(label="نام *" , placeholder="لطفا نام خود را بنویسید برای مثال : صدرا" , key="reg_name")
             last_name = st.text_input(label="نام خانوادگی *",placeholder="لطفا نام خانوادگی خود را بنویسید برای مثال : عباس زاده" , key="reg_last_name")
+            user_name = st.text_input(label="نام کاربری *",placeholder="لطفا یک نام کاربری برای خود بنویسید برای مثال : sadraabb",key="reg_username")
+            email_address = st.text_input(label="ایمیل",placeholder="لطفا ایمیل خود را وارد کنید برای مثال : abbsadra@gmail.com",key="reg_email")
+            password_user = st.text_input(label="رمز عبور *",type="password",placeholder="لطفا یک رمز عبور قوی برای خود انتخاب کنید",key="reg_password")
             check_rules = st.checkbox("پذیرفتن قوانین *",help="برای ادامه باید قوانین رو بپذیرید",key="reg_accept_rules")
             sumbit_button = st.form_submit_button("ثبت نام در برنامه")
             if sumbit_button:
                 st.session_state["reg_submitted"] = True
-            return user_id,user_name,name,last_name,sumbit_button,check_rules
 # Function for register process
 def process_register():
     if not st.session_state["reg_submitted"]:
         return
-    if not st.session_state["reg_username"]:
+    user_name = st.session_state["reg_username"]
+    password = st.session_state["reg_password"]
+    name = st.session_state["reg_name"]
+    last_name = st.session_state["reg_last_name"]
+    check_rules = st.session_state["reg_accept_rules"]
+    # --- VALIDATION CHECKS ---
+    if not user_name:
         st.error("لطفا یوزرنیم خود را وارد کنید!")
-    elif not st.session_state["reg_name"]:
+    elif not password:
+        st.error("لطفا رمز عبور خود را وارد کنید!")
+    elif not name:
         st.error("لطفا نام خود را وارد کنید!")
-    elif not st.session_state["reg_last_name"]:
+    elif not last_name:
         st.error("لطفا نام خانوادگی خود را وارد کنید!")
-    elif not st.session_state["reg_accept_rules"]:
+    elif not check_rules:
         st.error("برای ادامه باید قوانین رو بپذیرید")
     elif all (st.session_state[key] for key in ["reg_username","reg_name","reg_last_name","reg_accept_rules"]):
         with st.spinner("در حال ثبت‌نام... 🎮"):
@@ -200,17 +223,19 @@ def session_state_mange_success_register():
         "user_id" : st.session_state["reg_user_id"],
         "name" : st.session_state["reg_name"],
         "last_name" : st.session_state["reg_last_name"],
+        "password" : st.session_state["reg_password"],
+        "email" : st.session_state.get("reg_email",""),
         "check_rules" : st.session_state["reg_accept_rules"],
-        "reg_submitted" : True
+        "reg_submitted" : False
     }
     for key, value in finish_detailed.items():
         st.session_state[key] = value
 # --- MAIN PAGE RUNNER ---
 def run_page():
-    create_form()
+    init_session_state()
+    create_register_form()
     process_register()
 # ============ EXECUTION ============
 bootstrap_main_page()
-init_page_state()
 run_page()
 # ==================================
