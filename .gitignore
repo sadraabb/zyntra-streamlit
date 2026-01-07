@@ -214,4 +214,4 @@ __marimo__/
 .adminpanel
 
 #database
-.database
+database/userpanel/.user_data_folder/
