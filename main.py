@@ -167,28 +167,6 @@ def create_form():
             if sumbit_button:
                 st.session_state["reg_submitted"] = True
             return user_id,user_name,name,last_name,sumbit_button,check_rules
-
-
-# Function to update session state after successful registration
-# This function sets the user's registration status and saves all relevant user info 
-# into Streamlit's session_state so it can be accessed across pages or reruns.
-# Parameters:
-#   user_name (str): The username entered by the user
-#   name (str): The user's first name
-#   last_name (str): The user's last name
-#   check_rules (bool): Whether the user accepted the rules/terms
-def session_state_mange_success_register(user_id,user_name, name, last_name, check_rules):
-    finish_detailed = {
-        "registered" : True,
-        "user_name" : user_name,
-        "user_id" : user_id,
-        "name" : name,
-        "last_name" : last_name,
-        "check_rules" : check_rules,
-        "reg_submitted" : False
-    }
-    for key, value in finish_detailed.items():
-        st.session_state[key] = value
 # Function for register process
 def process_register():
     if not st.session_state["reg_submitted"]:
@@ -203,15 +181,30 @@ def process_register():
         st.error("برای ادامه باید قوانین رو بپذیرید")
     elif all (st.session_state[key] for key in ["reg_username","reg_name","reg_last_name","reg_accept_rules"]):
         with st.spinner("در حال ثبت‌نام... 🎮"):
-            session_state_mange_success_register(
-                user_id = st.session_state["reg_user_id"],
-                user_name = st.session_state["reg_username"],
-                name = st.session_state["reg_name"],
-                last_name = st.session_state["reg_last_name"],
-                check_rules = st.session_state["reg_accept_rules"]
-                )
+            session_state_mange_success_register()
             time.sleep(2)
             st.rerun()
+
+# Function to update session state after successful registration
+# This function sets the user's registration status and saves all relevant user info 
+# into Streamlit's session_state so it can be accessed across pages or reruns.
+# Parameters:
+#   user_name (str): The username entered by the user
+#   name (str): The user's first name
+#   last_name (str): The user's last name
+#   check_rules (bool): Whether the user accepted the rules/terms
+def session_state_mange_success_register():
+    finish_detailed = {
+        "registered" : True,
+        "user_name" : st.session_state["reg_username"],
+        "user_id" : st.session_state["reg_user_id"],
+        "name" : st.session_state["reg_name"],
+        "last_name" : st.session_state["reg_last_name"],
+        "check_rules" : st.session_state["reg_accept_rules"],
+        "reg_submitted" : True
+    }
+    for key, value in finish_detailed.items():
+        st.session_state[key] = value
 # --- MAIN PAGE RUNNER ---
 def run_page():
     create_form()
