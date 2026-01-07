@@ -41,11 +41,11 @@ __meta__ = {
 
 #imports
 import streamlit as st
-import random as rd
 import sqlite3
 import time
 from styles import apply_styles,show_logo
 from config import main_page_config
+from database.userpanel import add_user, create_users_table
 # --- PAGE TITLE ---
 st.title("برنامه بازی های سرگرمی تحت وب",width="content")
 # --- CONFIGURATION & STYLING ---
@@ -57,10 +57,11 @@ def bootstrap_main_page():
 def init_session_state():
     default_data = {
         "registered" : False,
-        "user_id" : "",
         "user_name" : "",
         "name" : "",
         "last_name" : "",
+        "password" : "",
+        "email" : "",
         "check_rules" : False,
         "reg_submitted" : False
     }
@@ -158,9 +159,6 @@ def create_register_form():
             st.switch_page(page="pages/1_home.py")
     else:
         with st.form("register_form"):
-            if "reg_user_id" not in st.session_state or not st.session_state["reg_user_id"]:
-                st.session_state["reg_user_id"] = rd.randint(1000,9999)
-            user_id = st.session_state["reg_user_id"]
             warning_show = st.warning(
                 """
                 **توجه:**
@@ -205,6 +203,13 @@ def process_register():
     elif all (st.session_state[key] for key in ["reg_username","reg_name","reg_last_name","reg_accept_rules"]):
         with st.spinner("در حال ثبت‌نام... 🎮"):
             session_state_mange_success_register()
+            add_user(
+                user_name=st.session_state["reg_username"],
+                name=st.session_state["reg_name"],
+                last_name=st.session_state["reg_last_name"],
+                password=st.session_state["reg_password"],
+                email=st.session_state.get("reg_email","")
+            )
             time.sleep(2)
             st.rerun()
 
@@ -220,7 +225,6 @@ def session_state_mange_success_register():
     finish_detailed = {
         "registered" : True,
         "user_name" : st.session_state["reg_username"],
-        "user_id" : st.session_state["reg_user_id"],
         "name" : st.session_state["reg_name"],
         "last_name" : st.session_state["reg_last_name"],
         "password" : st.session_state["reg_password"],
@@ -232,7 +236,8 @@ def session_state_mange_success_register():
         st.session_state[key] = value
 # --- MAIN PAGE RUNNER ---
 def run_page():
-    init_session_state()
+    create_users_table()
+    init_page_state()
     create_register_form()
     process_register()
 # ============ EXECUTION ============
