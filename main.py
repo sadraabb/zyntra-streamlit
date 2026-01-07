@@ -61,7 +61,8 @@ def init_session_state():
         "user_name" : "",
         "name" : "",
         "last_name" : "",
-        "check_rules" : False
+        "check_rules" : False,
+        "reg_submitted" : False
     }
     for key,value in default_data.items():
         if key not in st.session_state:
@@ -157,12 +158,14 @@ def create_form():
         with st.form("register_form"):
             user_id = rd.randint(1000,52534)
             warning_show = st.warning("این یک پروژه نمونه میباشد! اطلاعات شما ذخیره نمیشود!",icon="🚨")
-            id_number = st.number_input("آیدی عددی", value=user_id, disabled=True)
-            user_name = st.text_input(label="نام کاربری *",placeholder="لطفا یک نام کاربری برای خود بنویسید برای مثال : sadraabb")
-            name = st.text_input(label="نام *" , placeholder="لطفا نام خود را بنویسید برای مثال : صدرا")
-            last_name = st.text_input(label="نام خانوادگی *",placeholder="لطفا نام خانوادگی خود را بنویسید برای مثال : عباس زاده")
-            check_rules = st.checkbox("پذیرفتن قوانین *",help="برای ادامه باید قوانین رو بپذیرید")
+            id_number = st.number_input("آیدی عددی", value=user_id, disabled=True,key="reg_user_id")
+            user_name = st.text_input(label="نام کاربری *",placeholder="لطفا یک نام کاربری برای خود بنویسید برای مثال : sadraabb",key="reg_username")
+            name = st.text_input(label="نام *" , placeholder="لطفا نام خود را بنویسید برای مثال : صدرا" , key="reg_name")
+            last_name = st.text_input(label="نام خانوادگی *",placeholder="لطفا نام خانوادگی خود را بنویسید برای مثال : عباس زاده" , key="reg_last_name")
+            check_rules = st.checkbox("پذیرفتن قوانین *",help="برای ادامه باید قوانین رو بپذیرید",key="reg_accept_rules")
             sumbit_button = st.form_submit_button("ثبت نام در برنامه")
+            if sumbit_button:
+                st.session_state["reg_submitted"] = True
             return user_id,user_name,name,last_name,sumbit_button,check_rules
 
 
@@ -181,39 +184,38 @@ def session_state_mange_success_register(user_id,user_name, name, last_name, che
         "user_id" : user_id,
         "name" : name,
         "last_name" : last_name,
-        "check_rules" : check_rules
+        "check_rules" : check_rules,
+        "reg_submitted" : False
     }
     for key, value in finish_detailed.items():
         st.session_state[key] = value
 # Function for register process
-def process_register(user_id,user_name,name,last_name,sumbit_button,check_rules):
-    if sumbit_button:
-        if not user_name:
-            st.error("لطفا یوزرنیم خود را وارد کنید!")
-        elif not name:
-            st.error("لطفا نام خود را وارد کنید!")
-        elif not last_name:
-            st.error("لطفا نام خانوادگی خود را وارد کنید!")
-        elif check_rules is not True:
-            st.error("برای ادامه باید قوانین رو بپذیرید")
-        elif all ([user_name,name,last_name]):
-            with st.spinner("در حال ثبت‌نام... 🎮"):
-                session_state_mange_success_register(user_id, user_name, name, last_name, check_rules)
-                time.sleep(2)
-                st.rerun()
+def process_register():
+    if not st.session_state["reg_submitted"]:
+        return
+    if not st.session_state["reg_username"]:
+        st.error("لطفا یوزرنیم خود را وارد کنید!")
+    elif not st.session_state["reg_name"]:
+        st.error("لطفا نام خود را وارد کنید!")
+    elif not st.session_state["reg_last_name"]:
+        st.error("لطفا نام خانوادگی خود را وارد کنید!")
+    elif not st.session_state["reg_accept_rules"]:
+        st.error("برای ادامه باید قوانین رو بپذیرید")
+    elif all (st.session_state[key] for key in ["reg_username","reg_name","reg_last_name","reg_accept_rules"]):
+        with st.spinner("در حال ثبت‌نام... 🎮"):
+            session_state_mange_success_register(
+                user_id = st.session_state["reg_user_id"],
+                user_name = st.session_state["reg_username"],
+                name = st.session_state["reg_name"],
+                last_name = st.session_state["reg_last_name"],
+                check_rules = st.session_state["reg_accept_rules"]
+                )
+            time.sleep(2)
+            st.rerun()
 # --- MAIN PAGE RUNNER ---
 def run_page():
-    user_id, user_name, name, last_name, sumbit_button, check_rules = create_form()
-    process_register(
-        user_id,
-        user_name,
-        name,
-        last_name,
-        sumbit_button,
-        check_rules
-    )
-
-
+    create_form()
+    process_register()
 # ============ EXECUTION ============
 bootstrap_main_page()
 init_page_state()
