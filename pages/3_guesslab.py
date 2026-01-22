@@ -4,24 +4,15 @@ import random as rd
 import time
 #import styles and config
 from styles import apply_styles
+from config.auth import require_login
 from config import guesslab_page_config
-
 st.title("بازی حدس اعداد - GuessLab",width="content")
 # --- PAGE CONTENT ---
 def bootstrap_guesslab_page():
     guesslab_page_config()
     apply_styles()
 bootstrap_guesslab_page()
-# --- GUESSLAB PAGE RUN MANGMENT ---#
-def run_guesslab_page():
-    # بررسی وضعیت ثبت‌نام کاربر
-    if not st.session_state.get("registered", False):
-        st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
-        if st.button("رفتن به صفحه ثبت‌نام 📝"):
-            st.switch_page(page="main.py")
-        st.stop()
-    else:
-        guesslab_game()
+
 # --- GUESSLAB PAGE CONTENT ---
 def guesslab_game():
     st.markdown("## قوانین بازی:")
@@ -91,5 +82,5 @@ def guesslab_game():
             st.session_state.chat_history = []
             st.rerun()
 
-
-run_guesslab_page()
+require_login()
+guesslab_game()

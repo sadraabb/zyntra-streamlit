@@ -1,6 +1,7 @@
 #-- IMPORTS ---
 import streamlit as st
 from styles import apply_styles,show_logo
+from config.auth import require_login
 from config import home_page_config
 
 #--- PAGE CONTENT ---
@@ -12,33 +13,27 @@ def bootstrap_home_page():
 
 # بررسی وضعیت ثبت نام
 def check_registration():
-    if  st.session_state.get("loginned") != True :
-        st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
-        st.stop()
-    elif st.session_state.get("registered") and st.session_state.get("loginned") != True:
-        st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
-        st.stop()
-    else:
-        st.title("بازی‌ها و سرگرمی‌های تعاملی Zyntra")
-        st.markdown(
-            """
-              سلام **{name}**!  
-                در حال حاضر شما به سیستم وارد شده‌اید و می‌توانید به بازی‌ها و امکانات تعاملی آینده دسترسی داشته باشید.
+    st.title("بازی‌ها و سرگرمی‌های تعاملی Zyntra")
+    st.markdown(
+        """
+         سلام **{name}**!  
+         در حال حاضر شما به سیستم وارد شده‌اید و می‌توانید به بازی‌ها و امکانات تعاملی آینده دسترسی داشته باشید.
                 
-                🕹️ این صفحه فعلاً در حال توسعه است، اما در آینده نزدیک امکانات زیر اضافه خواهند شد:
-                - چندین بازی کوچک و سرگرم‌کننده
-                - پروفایل کاربری با امتیاز و رکوردها
-                - سیستم امتیازدهی و لیدربورد
-                - امکانات تعامل با API و سرویس‌های خارجی
-                """.format(name=st.session_state.get("name", "کاربر"))
-                )
-        st.info("🚧 این بخش هنوز در حال توسعه است. Coming Soon!")
-        # دکمه ورود به بخش بازی‌ها (فعلاً غیر فعال)
-        st.button("ورود به بازی‌ها (Coming Soon)", disabled=True)
+         🕹️ این صفحه فعلاً در حال توسعه است، اما در آینده نزدیک امکانات زیر اضافه خواهند شد:
+         - چندین بازی کوچک و سرگرم‌کننده
+        - پروفایل کاربری با امتیاز و رکوردها
+        - سیستم امتیازدهی و لیدربورد
+        - امکانات تعامل با API و سرویس‌های خارجی
+        """.format(name=st.session_state.get("name", "کاربر"))
+        )
+    st.info("🚧 این بخش هنوز در حال توسعه است. Coming Soon!")
+    # دکمه ورود به بخش بازی‌ها (فعلاً غیر فعال)
+    st.button("ورود به بازی‌ها (Coming Soon)", disabled=True)
 
 
 
 # ============ EXECUTION ============
 bootstrap_home_page()
+require_login()
 check_registration()
 # ==================================
