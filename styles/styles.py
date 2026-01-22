@@ -45,8 +45,8 @@ def apply_styles():
 
         /* دکمه اختصاصی Zyntra */
         button[kind="primaryFormSubmit"] {
-            background-color: #00f2fe !important;
-            color: black !important;
+            background-color: #1e1e1e !important;
+            color: #ffffff !important;
             font-weight: bold !important;
             width: 100%;
         }

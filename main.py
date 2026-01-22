@@ -45,7 +45,7 @@ import sqlite3
 import time
 from styles import apply_styles,show_logo
 from config import main_page_config
-from database.userpanel import add_user, create_users_table
+from database.userpanel import add_user, create_users_table,get_user_by_username,check_vaild_login,verify_password
 # --- PAGE TITLE ---
 st.title("برنامه بازی های سرگرمی تحت وب",width="content")
 # --- CONFIGURATION & STYLING ---
@@ -145,10 +145,40 @@ def init_page_state():
 #     )
 
 # --- REGISTER FORM CREATION ---
+#Menu for registration and login
+
+def check_main_menu_choice():
+    tab1, tab2 = st.tabs(["🔐 ورود", "📝 ثبت‌نام"])
+    
+    with tab1:
+        login_form()
+    with tab2:
+        create_register_form()
+
+
 # login form
 def login_form():
-    with st.form("login_form"):
-        pass
+    if st.session_state.get("loginned") == True:
+        st.write(f"خوش آمدی {st.session_state['name']} عزیز!")
+        if st.button("ورود به دنیای زینترو 🚀",key="Login_To_zyntro"):
+            st.switch_page(page="pages/1_home.py")
+    else:
+        with st.form("login_form"):
+            Warning_show = st.warning(
+                """
+                **توجه:**
+             اگر میخوایید برنامه رو بدون ثبت نام تست کنید لطفا در بخش نام کاربری و رمز عبور موارد زیر را وارد کنید : 
+             - نام کاربری : demo
+             - رمز عبور : demo123
+             """,
+            icon="🚨"
+            )
+            st.text_input(label="نام کاربری*",placeholder="لطفا نام کاربری خود را وارد کنید",key="login_username")
+            st.text_input(label="رمز عبور*",type="password",placeholder="لطفا رمز عبور خود را وارد کنید",key="login_password")
+            remember_me = st.checkbox("مرا به خاطر بسپار",key="login_remember_me")
+            login_button = st.form_submit_button("ورود به حساب کاربری",type="primary")
+            if login_button:
+                st.session_state["login_submitted"] = True
 # Create Register Form
 def create_register_form():
     if st.session_state.get("registered") == True:
@@ -213,6 +243,39 @@ def process_register():
             time.sleep(2)
             st.rerun()
 
+def process_login():
+    if not st.session_state["login_submitted"]:
+        return
+    user_name = st.session_state["login_username"]
+    password = st.session_state["login_password"]
+    # --- VALIDATION CHECKS ---
+    if not user_name:
+        st.error("لطفا یوزرنیم خود را وارد کنید!")
+    elif not password:
+        st.error("لطفا رمز عبور خود را وارد کنید!")
+    elif all (st.session_state[key] for key in ["login_username","login_password"]):
+        with st.spinner("در حال ورود... 🎮"):
+            is_valid, user = check_vaild_login(user_name, password)
+            if is_valid:
+                session_state_mange_success_login(user)
+            else:
+                st.error("نام کاربری یا رمز عبور اشتباه است!")
+            time.sleep(2)
+            st.rerun()
+
+def session_state_mange_success_login(user):
+    finish_detailed_login = {
+        "loginned" : True,
+        "user_name" : user[1],
+        "name" : user[2],
+        "last_name" : user[3],
+        "password" : user[4],
+        "email" : user[5],
+        "check_rules" : True,
+        "login_submitted" : False
+    }
+    for key, value in finish_detailed_login.items():
+        st.session_state[key] = value
 # Function to update session state after successful registration
 # This function sets the user's registration status and saves all relevant user info 
 # into Streamlit's session_state so it can be accessed across pages or reruns.
@@ -238,8 +301,13 @@ def session_state_mange_success_register():
 def run_page():
     create_users_table()
     init_page_state()
-    create_register_form()
-    process_register()
+    main_menu_choice = check_main_menu_choice()
+    if st.session_state.get("login_submitted"):
+        process_login()
+        st.session_state["login_submitted"] = False
+    if st.session_state.get("reg_submitted"):
+        process_register()
+        st.session_state["reg_submitted"] = False
 # ============ EXECUTION ============
 bootstrap_main_page()
 run_page()

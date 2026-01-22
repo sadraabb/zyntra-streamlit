@@ -1,7 +1,7 @@
 #-- IMPORTS ---
 import streamlit as st
-from styles.styles import apply_styles,show_logo
-from config.page_config import home_page_config
+from styles import apply_styles,show_logo
+from config import home_page_config
 
 #--- PAGE CONTENT ---
 def bootstrap_home_page():
@@ -12,7 +12,10 @@ def bootstrap_home_page():
 
 # بررسی وضعیت ثبت نام
 def check_registration():
-    if "registered" not in st.session_state or not st.session_state["registered"]:
+    if  st.session_state.get("loginned") != True :
+        st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
+        st.stop()
+    elif st.session_state.get("registered") and st.session_state.get("loginned") != True:
         st.error("🚨 برای ورود به این صفحه باید ابتدا ثبت‌نام کنید!")
         st.stop()
     else:

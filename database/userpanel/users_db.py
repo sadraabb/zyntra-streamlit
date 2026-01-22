@@ -39,3 +39,22 @@ def add_user(user_name, name, last_name, password, email):
     except Exception as e:
         # برای خطاهای پیش‌بینی نشده دیگر
         return None, str(e)
+
+# دریافت اطلاعات کاربر بر اساس نام کاربری
+def get_user_by_username(user_name):
+    with sqlite3.connect('./database/userpanel/.user_data_folder/users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM users WHERE user_name = ?', (user_name,))
+        user = cursor.fetchone()
+        return user
+# وریفای رمز عبور
+def verify_password(password, password_hash):
+    return hashlib.sha256(password.encode()).hexdigest() == password_hash
+# بررسی اعتبار ورود
+def check_vaild_login(user_name, password):
+    user = get_user_by_username(user_name)
+    if user:
+        stored_password_hash = user[4]  # ایندکس 4 مربوط به password_hash است
+        if verify_password(password, stored_password_hash):
+            return True, user  # بازگرداندن True و اطلاعات کاربر در صورت موفقیت
+    return False, None  # بازگرداندن False در صورت عدم موفقیت
