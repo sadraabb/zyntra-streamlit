@@ -4,7 +4,7 @@ def create_connection():
     """ create a database connection to the SQLite database specified by db_file """
     conn = None
     try:
-        conn = sqlite3.connect("zyntra_db.sqlite")
+        conn = sqlite3.connect("zyntra_db.db")
     except sqlite3.Error as e:
         print(e)
     return conn
@@ -24,8 +24,7 @@ def setup_database():
     conn.close()
 
 
-def check_login_panel(conn, username, password):
-    """ Check if the provided username and password match an entry in the admin panel table """
+def check_login_panel(username, password):
     conn = create_connection()
     cursor = conn.cursor()
     hashed_pw = hashlib.sha256(password.encode()).hexdigest()

@@ -254,14 +254,16 @@ def process_login():
     elif not password:
         st.error("لطفا رمز عبور خود را وارد کنید!")
     elif all (st.session_state[key] for key in ["login_username","login_password"]):
+        is_valid, user = check_vaild_login(user_name, password)
         with st.spinner("در حال ورود... 🎮"):
-            is_valid, user = check_vaild_login(user_name, password)
+            time.sleep(2)
             if is_valid:
                 session_state_mange_success_login(user)
+                st.switch_page(page="pages/1_home.py")
             else:
                 st.error("نام کاربری یا رمز عبور اشتباه است!")
-            time.sleep(2)
-            st.rerun()
+                time.sleep(2)
+                st.rerun()
 
 def session_state_mange_success_login(user):
     finish_detailed_login = {
