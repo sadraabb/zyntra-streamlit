@@ -214,5 +214,5 @@ __marimo__/
 .adminpanel
 
 #database
-database/userpanel/.user_data_folder/"feedback.db" 
-"database/adminpanel/*.db" 
+database/userpanel/.user_data_folder/
+database/adminpanel/*.db
