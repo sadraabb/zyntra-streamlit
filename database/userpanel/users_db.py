@@ -1,9 +1,19 @@
 # imports
 import sqlite3
 import hashlib
+import os
+
+# مسیر پوشه و فایل دیتابیس (مستقل از اینکه برنامه از کجا اجرا می‌شود)
+DB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".user_data_folder")
+DB_PATH = os.path.join(DB_DIR, "users.db")
+
+def get_connection():
+    # اگر پوشه‌ی دیتابیس وجود نداشته باشد (مثلاً روی دیپلوی تازه)، بسازش
+    os.makedirs(DB_DIR, exist_ok=True)
+    return sqlite3.connect(DB_PATH)
 
 def create_users_table():
-    conn = sqlite3.connect('./database/userpanel/.user_data_folder/users.db')
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
@@ -16,12 +26,29 @@ def create_users_table():
         )
     ''')
     conn.commit()
+    _seed_demo_user(conn)
     conn.close() # بستن اتصال برای امنیت و مدیریت حافظه
+
+def _seed_demo_user(conn):
+    """
+    یوزر دمو (demo/demo123) رو اگر وجود نداشته باشه می‌سازه.
+    اینجوری روی هر دیپلوی تازه (که دیتابیس خالیه) هم بنر دمو توی main.py معتبر می‌مونه.
+    idempotent هست: اگر از قبل وجود داشته باشه، هیچ کاری نمی‌کنه.
+    """
+    cursor = conn.cursor()
+    cursor.execute('SELECT 1 FROM users WHERE user_name = ?', ('demo',))
+    if cursor.fetchone() is None:
+        demo_password_hash = hashlib.sha256('demo123'.encode()).hexdigest()
+        cursor.execute('''
+            INSERT INTO users (user_name, name, last_name, password_hash, email)
+            VALUES (?, ?, ?, ?, ?)
+        ''', ('demo', 'کاربر', 'دمو', demo_password_hash, 'demo@zyntra.local'))
+        conn.commit()
 
 def add_user(user_name, name, last_name, password, email):
     try:
         password_hash = hashlib.sha256(password.encode()).hexdigest()
-        conn = sqlite3.connect('./database/userpanel/.user_data_folder/users.db')
+        conn = get_connection()
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO users (user_name, name, last_name, password_hash, email)
@@ -42,7 +69,7 @@ def add_user(user_name, name, last_name, password, email):
 
 # دریافت اطلاعات کاربر بر اساس نام کاربری
 def get_user_by_username(user_name):
-    with sqlite3.connect('./database/userpanel/.user_data_folder/users.db') as conn:
+    with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM users WHERE user_name = ?', (user_name,))
         user = cursor.fetchone()

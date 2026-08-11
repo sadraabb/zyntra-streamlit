@@ -70,7 +70,7 @@ def confirm_feedback_dialog():
             st.session_state.get("name","کاربر"),
             st.session_state.get("feedback_text", "feedback"),
             st.session_state.get("issue_type", "issue_type"),
-            st.session_state("rating","stars")
+            st.session_state.get("rating","stars")
         )
 # ============ EXECUTION ============
 bootstrap_feedback_page()

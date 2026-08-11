@@ -1,10 +1,17 @@
 # feedback_db.py
 import sqlite3
+import os
 
-DB_FILE = "feedback.db"
+# مسیر مستقل از محل اجرای برنامه، داخل همون پوشه‌ی مخفی کاربران
+DB_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".user_data_folder")
+DB_FILE = os.path.join(DB_DIR, "feedback.db")
+
+def get_connection():
+    os.makedirs(DB_DIR, exist_ok=True)
+    return sqlite3.connect(DB_FILE)
 
 def init_feedback_db():
-    conn = sqlite3.connect("feedback.db")
+    conn = get_connection()
     c = conn.cursor()
     c.execute('''
         CREATE TABLE IF NOT EXISTS feedback (
@@ -20,10 +27,10 @@ def init_feedback_db():
 
 def save_feedback(name, feedback_text, issue_type, rating):
     """ذخیره بازخورد در دیتابیس"""
-    conn = sqlite3.connect(DB_FILE)
+    conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        INSERT INTO feedback (name, feedback, issue_type, rating)
+        INSERT INTO feedback (name, feedback_text, issue_type, rating)
         VALUES (?, ?, ?, ?)
     """, (name, feedback_text, issue_type, rating))
     conn.commit()

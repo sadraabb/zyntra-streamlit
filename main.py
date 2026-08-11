@@ -214,6 +214,9 @@ def create_register_form():
 def process_register():
     if not st.session_state["reg_submitted"]:
         return
+    # فلگ رو همینجا ریست می‌کنیم تا اگر پایین‌تر st.rerun() صدا زده بشه،
+    # دور بعدی اجرا دوباره وارد این تابع نشه و حلقه‌ی بی‌نهایت پیش نیاد
+    st.session_state["reg_submitted"] = False
     user_name = st.session_state["reg_username"]
     password = st.session_state["reg_password"]
     name = st.session_state["reg_name"]
@@ -246,6 +249,9 @@ def process_register():
 def process_login():
     if not st.session_state["login_submitted"]:
         return
+    # فلگ رو همینجا ریست می‌کنیم تا اگر پایین‌تر st.rerun() صدا زده بشه،
+    # دور بعدی اجرا دوباره وارد این تابع نشه و حلقه‌ی بی‌نهایت پیش نیاد
+    st.session_state["login_submitted"] = False
     user_name = st.session_state["login_username"]
     password = st.session_state["login_password"]
     # --- VALIDATION CHECKS ---
